@@ -148,10 +148,14 @@ jobs:
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set   
           # CONFIG_PACKAGE_luci-app-filetransfer is not set          
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
+          # CONFIG_PACKAGE_shadowsocks-client is not set
+          # CONFIG_PACKAGE_shadowsocks-libev-ss-local is not set
+          # CONFIG_PACKAGE_shadowsocks-libev-ss-redir is not set
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y          
           EOF
           # LuCI主题:
           cat >> .config <<EOF
+          # CONFIG_PACKAGE_luci-theme-bootstrap is not set
           # CONFIG_PACKAGE_luci-theme-netgear=y
           CONFIG_PACKAGE_luci-theme-material=y
           EOF
