@@ -120,8 +120,9 @@ detect_mac80211() {
 			set wireless.default_radio${devidx}.network=lan
 			set wireless.default_radio${devidx}.mode=ap
 			set wireless.default_radio${devidx}.ssid=GameRouter
-			set wireless.default_radio${devidx}.encryption=psk-mixed
-			set wireless.default_radio${devidx}.key=
+			set wireless.default_radio${devidx}.encryption=psk2
+			set wireless.default_radio${devidx}.key=only4game
+			
 EOF
 		uci -q commit wireless
 
