@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: YK_L1_Mini
+name: openwrt-ci
 
 on:
   push:
@@ -131,27 +131,12 @@ jobs:
           #EOF
           # 常用LuCI插件选择:
           cat >> .config <<EOF
-		      # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
-		      # CONFIG_PACKAGE_adbyby is not set
-		      # CONFIG_PACKAGE_luci-app-vsftpd is not set
-		      # CONFIG_PACKAGE_vsftpd is not set
-		      # CONFIG_PACKAGE_vsftpd-alt is not set
-	        # CONFIG_PACKAGE_vsftpd-tls is not set
-		      # CONFIG_PACKAGE_luci-app-unblockmusic is not set
-		      # CONFIG_PACKAGE_luci-app-wol is not set
-		      # CONFIG_PACKAGE_luci-app-nlbwmon is not set
-		      # CONFIG_PACKAGE_nlbwmon is not set
-		      # CONFIG_PACKAGE_ddns-scripts is not set
-		      # CONFIG_PACKAGE_ddns-scripts_aliyun is not set
-		      # CONFIG_PACKAGE_luci-app-ddns is not set
-		      # CONFIG_PACKAGE_ddns-scripts_dnspod is not set
-		      # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks is not set
-          EOF
+	  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+	  EOF
           # LuCI主题:
           # cat >> .config <<EOF
-		      # CONFIG_PACKAGE_luci-theme-argon=y
+	  # CONFIG_PACKAGE_luci-theme-argon=y
           # CONFIG_PACKAGE_luci-theme-netgear=y
-		      # CONFIG_PACKAGE_luci-theme-material is not set
           # EOF
           # 常用软件包:
           # cat >> .config <<EOF
@@ -167,6 +152,9 @@ jobs:
           cat >> .config <<EOF
           # CONFIG_TARGET_IMAGES_PAD is not set
           # CONFIG_VMDK_IMAGES is not set
+          EOF
+          cat >> .config <<EOF
+	  # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
           EOF
           # 
           # ========================固件定制部分结束========================
