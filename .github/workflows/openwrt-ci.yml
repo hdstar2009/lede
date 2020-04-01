@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI
+name: YK_L1_Mini
 
 on:
   push:
@@ -93,20 +93,20 @@ jobs:
           # 
           # 无论你想要对固件进行怎样的定制, 都需要且只需要修改 EOF 回环内的内容.
           # 
-          # 编译x64固件:
+          # 编译L1固件:
           cat >> .config <<EOF
           CONFIG_TARGET_ramips=y
           CONFIG_TARGET_ramips_mt7620=y
           CONFIG_TARGET_ramips_mt7620_DEVICE_youku_yk1=y
           EOF
           # 固件压缩:
-          cat >> .config <<EOF
-          CONFIG_TARGET_IMAGES_GZIP=y
-          EOF
+          #cat >> .config <<EOF
+          #CONFIG_TARGET_IMAGES_GZIP=y
+          #EOF
           # 编译UEFI固件:
-          cat >> .config <<EOF
-          CONFIG_EFI_IMAGES=y
-          EOF
+          #cat >> .config <<EOF
+          #CONFIG_EFI_IMAGES=y
+          #EOF
           # IPv6支持:
           #cat >> .config <<EOF
           #CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
@@ -131,24 +131,38 @@ jobs:
           #EOF
           # 常用LuCI插件选择:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
-          CONFIG_PACKAGE_luci-appluci-app-upnp=y 
+		      # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
+		      # CONFIG_PACKAGE_adbyby is not set
+		      # CONFIG_PACKAGE_luci-app-vsftpd is not set
+		      # CONFIG_PACKAGE_vsftpd is not set
+		      # CONFIG_PACKAGE_vsftpd-alt is not set
+	        # CONFIG_PACKAGE_vsftpd-tls is not set
+		      # CONFIG_PACKAGE_luci-app-unblockmusic is not set
+		      # CONFIG_PACKAGE_luci-app-wol is not set
+		      # CONFIG_PACKAGE_luci-app-nlbwmon is not set
+		      # CONFIG_PACKAGE_nlbwmon is not set
+		      # CONFIG_PACKAGE_ddns-scripts is not set
+		      # CONFIG_PACKAGE_ddns-scripts_aliyun is not set
+		      # CONFIG_PACKAGE_luci-app-ddns is not set
+		      # CONFIG_PACKAGE_ddns-scripts_dnspod is not set
+		      # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks is not set
           EOF
           # LuCI主题:
-          cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-theme-netgear=y
-          EOF
+          # cat >> .config <<EOF
+		      # CONFIG_PACKAGE_luci-theme-argon=y
+          # CONFIG_PACKAGE_luci-theme-netgear=y
+		      # CONFIG_PACKAGE_luci-theme-material is not set
+          # EOF
           # 常用软件包:
-          #cat >> .config <<EOF
-          #CONFIG_PACKAGE_curl=y
-          #CONFIG_PACKAGE_htop=y
-          #CONFIG_PACKAGE_nano=y
-          #CONFIG_PACKAGE_screen=y
-          #CONFIG_PACKAGE_tree=y
-          #CONFIG_PACKAGE_vim-fuller=y
-          #CONFIG_PACKAGE_wget=y
-          #EOF
+          # cat >> .config <<EOF
+          # CONFIG_PACKAGE_curl=y
+          # CONFIG_PACKAGE_htop=y
+          # CONFIG_PACKAGE_nano=y
+          # CONFIG_PACKAGE_screen=y
+          # CONFIG_PACKAGE_tree=y
+          # CONFIG_PACKAGE_vim-fuller=y
+          # CONFIG_PACKAGE_wget=y
+          # EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
           cat >> .config <<EOF
           # CONFIG_TARGET_IMAGES_PAD is not set
