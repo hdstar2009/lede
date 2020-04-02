@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI
+name: K2
 
 on:
   push:
@@ -148,9 +148,6 @@ jobs:
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set   
           # CONFIG_PACKAGE_luci-app-filetransfer is not set          
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
-          # CONFIG_PACKAGE_kmod-ip6tables is not set
-          # CONFIG_PACKAGE_kmod-nf-ipt6 is not set
-          # CONFIG_PACKAGE_libip6tc is not set
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y          
           EOF
           # LuCI主题:
@@ -170,10 +167,10 @@ jobs:
           #CONFIG_PACKAGE_wget=y
           #EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
-          cat >> .config <<EOF
-          # CONFIG_TARGET_IMAGES_PAD is not set
-          # CONFIG_VMDK_IMAGES is not set 
-          EOF
+          # cat >> .config <<EOF
+          # # CONFIG_TARGET_IMAGES_PAD is not set
+          # # CONFIG_VMDK_IMAGES is not set		  
+          # EOF
           # 
           # ========================固件定制部分结束========================
           # 
@@ -188,11 +185,8 @@ jobs:
         run: |
           echo -e "$(nproc) thread build."
           make -j$(nproc) V=s
-          cd /home/runner/work/lede/lede/bin/targets
-          rm -rf packages
-          rm -rf *kernel.bin
       - name : Upload artifact
         uses: actions/upload-artifact@master
         with:
-          name: OpenWrt firmware
-          path: bin/targets      
+          name: K2_firmware
+          path: bin/targets
