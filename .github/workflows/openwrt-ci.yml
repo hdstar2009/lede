@@ -188,18 +188,11 @@ jobs:
         run: |
           echo -e "$(nproc) thread build."
           make -j$(nproc) V=s
+          cd /home/runner/work/lede/lede/bin/targets
+          rm -rf packages
+          rm -rf *kernel.bin
       - name : Upload artifact
         uses: actions/upload-artifact@master
         with:
           name: OpenWrt firmware
-          path: bin/targets
-      - name: Organize files
-        run: |
-          cd openwrt/bin/targets/*/*
-          rm -rf packages
-          echo "::set-env name=FIRMWARE::$(pwd)"
-      - name: Upload firmware directory
-        uses: actions/upload-artifact@master
-        with:
-          name: OpenWrt_firmware
-          path: ${{ env.FIRMWARE }}          
+          path: bin/targets      
