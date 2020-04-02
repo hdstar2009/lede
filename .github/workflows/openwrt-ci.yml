@@ -19,6 +19,10 @@ on:
   # release:
   #   types: [published]
 
+env:
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -148,9 +152,9 @@ jobs:
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set   
           # CONFIG_PACKAGE_luci-app-filetransfer is not set          
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
-          # CONFIG_PACKAGE_shadowsocks-client is not set
-          # CONFIG_PACKAGE_shadowsocks-libev-ss-local is not set
-          # CONFIG_PACKAGE_shadowsocks-libev-ss-redir is not set
+          # CONFIG_PACKAGE_kmod-ip6tables is not set
+          # CONFIG_PACKAGE_kmod-nf-ipt6 is not set
+          # CONFIG_PACKAGE_libip6tc is not set
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y          
           EOF
           # LuCI主题:
@@ -179,17 +183,38 @@ jobs:
           # 
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
-      - name: Download package source code
-        run: |
-          make download -j8
-          find dl -size -1024c -exec ls -l {} \;
-          find dl -size -1024c -exec rm -f {} \;
-      - name: Compile firmware
-        run: |
-          echo -e "$(nproc) thread build."
-          make -j$(nproc) V=s
-      - name : Upload artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: K2_firmware
-          path: bin/targets
+    - name: Download package
+      id: package
+      run: |
+        cd openwrt
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+    - name: Compile the firmware
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 V=s
+        echo "::set-output name=status::success"
+    - name: Upload bin directory
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_directory
+        path: openwrt/bin
+
+    - name: Organize files
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "::set-env name=FIRMWARE::$(pwd)"
+        echo "::set-output name=status::success"
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware
+        path: ${{ env.FIRMWARE }}
