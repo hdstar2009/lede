@@ -93,11 +93,11 @@ jobs:
           # 
           # 无论你想要对固件进行怎样的定制, 都需要且只需要修改 EOF 回环内的内容.
           # 
-          # 编译K2固件:
+          # 编译YKL1固件:
           cat >> .config <<EOF
           CONFIG_TARGET_ramips=y
-          CONFIG_TARGET_ramips_mt7620=y
-          CONFIG_TARGET_ramips_mt7620_DEVICE_phicomm_psg1218a=y
+          CONFIG_TARGET_ramips_mt7621=y
+          CONFIG_TARGET_ramips_mt7621_DEVICE_phicomm_k2p=y
           EOF
           # 固件压缩:
           cat >> .config <<EOF
@@ -147,30 +147,29 @@ jobs:
           # CONFIG_PACKAGE_ddns-scripts_dnspod is not set   
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set   
           # CONFIG_PACKAGE_luci-app-filetransfer is not set          
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y          
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y         
           EOF
           # LuCI主题:
           cat >> .config <<EOF
-          # CONFIG_PACKAGE_luci-theme-bootstrap is not set
           # CONFIG_PACKAGE_luci-theme-netgear=y
           CONFIG_PACKAGE_luci-theme-material=y
           EOF
           # 常用软件包:
-          #cat >> .config <<EOF
+          cat >> .config <<EOF
           #CONFIG_PACKAGE_curl=y
-          #CONFIG_PACKAGE_htop=y
-          #CONFIG_PACKAGE_nano=y
+          CONFIG_PACKAGE_htop=y
+          CONFIG_PACKAGE_nano=y
           #CONFIG_PACKAGE_screen=y
           #CONFIG_PACKAGE_tree=y
           #CONFIG_PACKAGE_vim-fuller=y
           #CONFIG_PACKAGE_wget=y
-          #EOF
+          EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
-          # cat >> .config <<EOF
-          # # CONFIG_TARGET_IMAGES_PAD is not set
-          # # CONFIG_VMDK_IMAGES is not set		  
-          # EOF
+          cat >> .config <<EOF
+          # CONFIG_TARGET_IMAGES_PAD is not set
+          # CONFIG_VMDK_IMAGES is not set		  
+          EOF
           # 
           # ========================固件定制部分结束========================
           # 
@@ -188,5 +187,5 @@ jobs:
       - name : Upload artifact
         uses: actions/upload-artifact@master
         with:
-          name: K2_firmware
+          name: K2P
           path: bin/targets
